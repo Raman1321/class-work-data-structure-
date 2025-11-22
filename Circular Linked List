@@ -1,0 +1,107 @@
+class Node:
+    def __init__(self, data):
+        self.data = data
+        self.next = None
+
+class CircularLinkedList:
+    def __init__(self):
+        self.head = None
+
+    def insert_at_end(self, data):
+        new_node = Node(data)
+        if self.head is None:
+            self.head = new_node
+            new_node.next = self.head
+            return
+        temp = self.head
+        while temp.next != self.head:
+            temp = temp.next
+        temp.next = new_node
+        new_node.next = self.head
+
+    def insert_at_beginning(self, data):
+        new_node = Node(data)
+        if self.head is None:
+            self.head = new_node
+            new_node.next = self.head
+            return
+        temp = self.head
+        while temp.next != self.head:
+            temp = temp.next
+        new_node.next = self.head
+        temp.next = new_node
+        self.head = new_node
+
+    def display(self):
+        if self.head is None:
+            print("List is empty")
+            return
+        out = []
+        temp = self.head
+        while True:
+            out.append(str(temp.data))
+            temp = temp.next
+            if temp == self.head:
+                break
+        print(" -> ".join(out) + " -> (back to head)")
+
+# --- Interactive demo/menu ---
+def main():
+    cll = CircularLinkedList()
+    while True:
+        print("\nCircular Linked List Operations")
+        print("1. Insert at end")
+        print("2. Insert at beginning")
+        print("3. Display list")
+        print("4. Demo sequence (10,20,30 then insert 5 at beginning and 40 at end)")
+        print("5. Exit")
+        choice = input("Enter choice (1-5): ").strip()
+
+        if choice == '1':
+            try:
+                val = int(input("Enter integer value to insert at end: ").strip())
+            except ValueError:
+                print("Please enter a valid integer.")
+                continue
+            cll.insert_at_end(val)
+            print("After insertion at end:")
+            cll.display()
+
+        elif choice == '2':
+            try:
+                val = int(input("Enter integer value to insert at beginning: ").strip())
+            except ValueError:
+                print("Please enter a valid integer.")
+                continue
+            cll.insert_at_beginning(val)
+            print("After insertion at beginning:")
+            cll.display()
+
+        elif choice == '3':
+            print("Current list:")
+            cll.display()
+
+        elif choice == '4':
+            # Demo sequence to match your example
+            cll = CircularLinkedList()
+            cll.insert_at_end(10)
+            cll.insert_at_end(20)
+            cll.insert_at_end(30)
+            print("Original list:")
+            cll.display()
+            cll.insert_at_beginning(5)
+            print("After inserting 5 at beginning:")
+            cll.display()
+            cll.insert_at_end(40)
+            print("After inserting 40 at end:")
+            cll.display()
+
+        elif choice == '5':
+            print("Exiting. Goodbye!")
+            break
+
+        else:
+            print("Invalid choice — try again.")
+
+if __name__ == "__main__":
+    main()
