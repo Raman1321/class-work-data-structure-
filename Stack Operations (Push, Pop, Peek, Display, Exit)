@@ -1,0 +1,73 @@
+stack = []
+
+def push():
+    item = input("Enter item to push: ")
+    stack.append(item)
+    print(f"Pushed {item}")
+
+def pop_item():
+    if not stack:
+        print("Stack is empty.")
+    else:
+        popped = stack.pop()
+        print(f"Popped {popped}")
+
+def peek():
+    if not stack:
+        print("Stack is empty.")
+    else:
+        print(f"Top item is {stack[-1]}")
+
+def display():
+    if not stack:
+        print("Stack is empty.")
+    else:
+        print("Stack items:", stack)
+
+while True:
+    print("\n1. Push\n2. Pop\n3. Peek\n4. Display\n5. Exit")
+    choice = input("Enter your choice: ")
+
+    if choice == "1":
+        push()
+    elif choice == "2":
+        pop_item()
+    elif choice == "3":
+        peek()
+    elif choice == "4":
+        display()
+    elif choice == "5":
+        print("Exiting.")
+        break
+    else:
+        print("Invalid choice, please try again.")
+# Function to perform operation
+def apply_operation(op1, op2, operator):
+    if operator == '+':
+        return op1 + op2
+    elif operator == '-':
+        return op1 - op2
+    elif operator == '*':
+        return op1 * op2
+    elif operator == '/':
+        return op1 // op2   # integer division
+
+# Function to evaluate postfix expression
+def evaluate_postfix(expression):
+    stack = []
+    tokens = expression.split()
+
+    for token in tokens:
+        if token.isdigit():       # number → push to stack
+            stack.append(int(token))
+        else:                     # operator → pop 2 values
+            op2 = stack.pop()
+            op1 = stack.pop()
+            result = apply_operation(op1, op2, token)
+            stack.append(result)
+
+    return stack.pop()
+
+# MAIN PROGRAM
+expr = input("Enter a postfix expression (with spaces): ")
+print("Result =", evaluate_postfix(expr))
